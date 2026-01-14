@@ -4,6 +4,7 @@ from time import time
 class Config:
     SECRET_KEY='abc123'
 
+    # MASTER (write) Automatically handeled by TiDB Cloud
     SQLALCHEMY_DATABASE_URI = (
         "mysql+pymysql://47vaDr39q2MWZRN.root:"
         "xypzX71xUJG00aro"
@@ -12,9 +13,14 @@ class Config:
         "?ssl_verify_cert=true"
         "&ssl_verify_identity=true"
     )
+
+    # SLAVE (read)
+    # SQLALCHEMY_BINDS = {
+    #     "slave": "mysql+pymysql://user:pass@localhost:3307/shop_slave"
+    # }
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 
-    JWT_SECRET_KEY='jwt-secret-string'
+    JWT_SECRET_KEY='abc123456'
     JWT_TOKEN_LOCATION=["headers"]
     JWT_ACCESS_TOKEN_EXPIRES=86400
     JWT_REFRESH_TOKEN_EXPIRES=604800
@@ -34,8 +40,7 @@ class Config:
     MAIL_DEFAULT_SENDER = "flexvibeshoot@gmail.com"
 
     # ---------- GOOGLE OAUTH ----------
-    GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
-    GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+    
 
     GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
     GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
@@ -58,9 +63,10 @@ class Config:
     RAZORPAY_KEY_SECRET='m75HxseUL5BEG3Fa2oJPR98i'
 
     #celery configuration
-    broker_url = "redis://localhost:6379/0"
-    result_backend = "redis://localhost:6379/1"
+    broker_url = "redis://127.0.0.1:6379/0"
+    result_backend = "redis://127.0.0.1:6379/1"
     RATELIMIT_STORAGE_URI = broker_url
+    SOCKETIO_MESSAGE_QUEUE=broker_url
 
     task_default_queue = "default"
 
@@ -84,6 +90,7 @@ class Config:
         "app.tasks.heavy.*": {"queue": "heavy_queue"},
     }
 
+    # redis indexin to prevent duplicatte
     LOCK_KEY = "search:rebuild:lock"
     LOCK_KEY_INDEXING="search:rebuild:lockindexing"
 
@@ -92,3 +99,9 @@ class Config:
 
     ADMIN_LAT=22.8282019
     ADMIN_LONG=88.3414937
+
+    # Firebase
+    FIREBASE_CREDENTIALS = os.path.join(
+        os.path.dirname(__file__),
+        "firebase_service_account.json"
+    )
