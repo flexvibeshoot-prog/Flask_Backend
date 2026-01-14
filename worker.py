@@ -1,7 +1,7 @@
 from app.celery_app import celery
 
 # 🔥 REGISTER ALL TASK MODULES
-import app.tasks.messaging_task
+import app.tasks.Registermessaging_task
 import app.tasks.heavy_task
 import app.tasks.log_task
 
