@@ -1,9 +1,8 @@
-from app import create_app,db
+from app import create_app
 import os
-
-
-app=create_app()
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
-if __name__=='__main__':
-    app.run(debug=True,use_reloader=False)
+app = create_app()
+
+if __name__ == '__main__':
+    app.run(debug=True, use_reloader=False)
